@@ -26,8 +26,11 @@ RailSystem::RailSystem(const string& filename)
 
 RailSystem::~RailSystem(void) 
 {
-    // TODO: release all the City* and Service*
-    // from cities and outgoing_services
+    for (std::pair<std::string, City*> city : cities)
+        delete city.second;
+    for (std::pair<std::string, std::list<Service*>> serviceList : outgoing_services)
+        for (Service* service : serviceList.second)
+            delete service;
 }
 
 // TODO: тут д.б. КК и оператор копирования, т.к. деструктор объявлен...
@@ -35,8 +38,13 @@ RailSystem::~RailSystem(void)
 
 void RailSystem::reset(void)
 {
-    // TODO: reset the data objects of the 
-    // City objects' contained in cities   
+    for (std::pair<std::string, City*> s : cities)
+    {
+        s.second->visited = false;
+        s.second->total_fee = 0;
+        s.second->total_distance = 0;
+        s.second->from_city = "";
+    }
 }
 
 void RailSystem::load_services(const string& filename) 
@@ -51,10 +59,7 @@ void RailSystem::load_services(const string& filename)
 		inf >> from >> to >> fee >> distance;
 
 		if (inf.good())
-        {		
-			// TODO: Add entries in the cities container and
-			// and services in the rail system for the new 
-            // cities we read in.	
+        {			
             if (cities.count(from) == 0)
                 cities[from] = new City(from);
             if (cities.count(to) == 0)

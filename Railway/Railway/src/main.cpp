@@ -22,8 +22,9 @@ int main(int argc, char* argv[])
 {
     try 
     {
-        RailSystem rs("services.txt");
-
+        RailSystem* rs = new RailSystem("C:\\GitHub\\GraphCities\\Railway\\Debug\\services.txt");
+        delete rs;
+        int a = 5;
         /*while (true) 
         {
             cerr << "\n\nEnter a start and destination city:  ('quit' to exit)\n";
