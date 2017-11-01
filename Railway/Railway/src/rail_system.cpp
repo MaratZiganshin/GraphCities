@@ -12,7 +12,7 @@
 // шаблон которой объявлен в файле "priority_queue.h"
 // TODO: необходимо проверить компаратор Cheapest на правильность — т.е. что он выстраивает
 // города в «правильном» (с точки зрения алгоритма) порядке.
-typedef PriorityQueue<City*, Cheapest> CitiesPriorityQueue;
+//typedef PriorityQueue<City*, Cheapest> CitiesPriorityQueue;
 
 
 
@@ -55,6 +55,15 @@ void RailSystem::load_services(const string& filename)
 			// TODO: Add entries in the cities container and
 			// and services in the rail system for the new 
             // cities we read in.	
+            if (cities.count(from) == 0)
+                cities[from] = new City(from);
+            if (cities.count(to) == 0)
+                cities[to] = new City(to);
+            if (outgoing_services.count(from) == 0)
+                outgoing_services[from] = std::list<Service*>();
+            if (outgoing_services.count(to) == 0)
+                outgoing_services[to] = std::list<Service*>();
+            outgoing_services[from].push_back(new Service(to, fee, distance));
 		}
 	}
 	inf.close();
@@ -84,11 +93,11 @@ bool RailSystem::is_valid_city(const string& name)
 	return cities.count(name) == 1;
 }
 
-pair<int, int> RailSystem::calc_route(string from, string to)
+pair<int, int> RailSystem::calc_route(const string& from, const string& to)
 {
     // NB: здесь необходимо использовать собственную реализацию очереди с приоритетами,
     // псевдоним для которой описан в верху этого файла
-    CitiesPriorityQueue candidates;
+    //CitiesPriorityQueue candidates;
 
     // TODO: Implement Dijkstra's shortest path algorithm to
     // find the cheapest route between the cities

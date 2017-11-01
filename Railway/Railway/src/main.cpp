@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     {
         RailSystem rs("services.txt");
 
-        while (true) 
+        /*while (true) 
         {
             cerr << "\n\nEnter a start and destination city:  ('quit' to exit)\n";
 
@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
                 rs.output_cheapest_route (from, to, cout);
             else
                 cout << "Please enter valid cities\n\n";
-        } // while
+        } // while*/
 
         return 0;   // EXIT_SUCCESS; // именованная константа здесь смотрится, конечно, лучше но не во всех компиляторах она берется "из коробки"
     }
