@@ -12,7 +12,7 @@
 // шаблон которой объявлен в файле "priority_queue.h"
 // TODO: необходимо проверить компаратор Cheapest на правильность — т.е. что он выстраивает
 // города в «правильном» (с точки зрения алгоритма) порядке.
-//typedef PriorityQueue<City*, Cheapest> CitiesPriorityQueue;
+typedef PriorityQueue<City*, Cheapest> CitiesPriorityQueue;
 
 
 

@@ -1,5 +1,4 @@
-﻿  rail_system.cpp
-  main.cpp
-  Создание кода...
+﻿  main.cpp
+c:\github\graphcities\railway\railway\src\main.cpp(39): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
   Railway.vcxproj -> C:\GitHub\GraphCities\Railway\Debug\Railway.exe
   Railway.vcxproj -> C:\GitHub\GraphCities\Railway\Debug\Railway.pdb (Partial PDB)

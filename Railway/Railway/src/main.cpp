@@ -8,8 +8,20 @@
 #include "city.h"
 #include "service.h"
 #include "rail_system.h"
+#include "priority_queue.h"
+#include <time.h>
 
 using namespace std;
+
+class ComparatorInt
+{
+public:
+    bool operator()(const int& lhs, const int& rhs) const
+    {
+        if (lhs < rhs) return true;
+        else return false;
+    }
+};
 
 // For test
 bool check(const Route& expected, RailSystem& rs)
@@ -22,9 +34,22 @@ int main(int argc, char* argv[])
 {
     try 
     {
-        RailSystem* rs = new RailSystem("C:\\GitHub\\GraphCities\\Railway\\Debug\\services.txt");
-        delete rs;
-        int a = 5;
+        PriorityQueue<int, ComparatorInt> queue;
+        int a[20];
+        srand(time(0));
+        for (int i = 0; i < 20; i++)
+        {
+            a[i] = rand() % 100;
+            queue.push(a[i]);
+        }
+        cout << queue.size() << endl;
+
+        cout << queue.pop() << endl;
+
+        cout << queue.pop() << endl;
+
+        cout << queue.pop() << endl;
+        int k = 1;
         /*while (true) 
         {
             cerr << "\n\nEnter a start and destination city:  ('quit' to exit)\n";
