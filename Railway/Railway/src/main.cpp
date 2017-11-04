@@ -34,21 +34,9 @@ int main(int argc, char* argv[])
 {
     try 
     {
-        PriorityQueue<int, ComparatorInt> queue;
-        int a[20];
-        srand(time(0));
-        for (int i = 0; i < 20; i++)
-        {
-            a[i] = rand() % 100;
-            queue.push(a[i]);
-        }
-        cout << queue.size() << endl;
-
-        cout << queue.pop() << endl;
-
-        cout << queue.pop() << endl;
-
-        cout << queue.pop() << endl;
+        RailSystem s("C:\\GitHub\\GraphCities\\Railway\\services.txt");
+        pair<int, int> p = s.calc_route("Lisbon", "Copenhagen");
+        cout << p.first << " " << p.second;
         int k = 1;
         /*while (true) 
         {

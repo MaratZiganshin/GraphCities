@@ -76,6 +76,7 @@ public:
     
     // For test only   
     Route getCheapestRoute(const std::string& from, const std::string& to);
+    std::pair<int, int> calc_route(const std::string& from, const std::string& to);
     
 protected:
     std::map<std::string, std::list<Service*> > outgoing_services;
@@ -85,7 +86,7 @@ protected:
     void reset();
     
     std::string recover_route(const std::string& city);
-    std::pair<int, int> calc_route(const std::string& from, const std::string& to);    
+    //вернуть на место    
 };
 
 

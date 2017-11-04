@@ -102,11 +102,32 @@ pair<int, int> RailSystem::calc_route(const string& from, const string& to)
 {
     // NB: здесь необходимо использовать собственную реализацию очереди с приоритетами,
     // псевдоним для которой описан в верху этого файла
-    //CitiesPriorityQueue candidates;
-
-    // TODO: Implement Dijkstra's shortest path algorithm to
-    // find the cheapest route between the cities
-    
+    CitiesPriorityQueue candidates;
+    for (pair<std::string, City*> city : cities)
+    {
+        city.second->total_fee = INT_MAX;
+        city.second->total_distance = INT_MAX;
+    }
+    //string currCity = from;
+    candidates.push(cities[from]);
+    cities[from]->visited = true;
+    cities[from]->total_distance = 0;
+    cities[from]->total_fee = 0;
+    while (!candidates.isEmpty())
+    {
+        City* currCity = candidates.pop();
+        for (Service* service : outgoing_services[currCity->name])
+        {
+            if (/*!cities[service->destination]->visited || */cities[service->destination]->total_fee > currCity->total_fee + service->fee)
+            {
+                cities[service->destination]->visited = true;
+                cities[service->destination]->from_city = currCity->name;
+                cities[service->destination]->total_fee = currCity->total_fee + service->fee;
+                cities[service->destination]->total_distance = currCity->total_distance + service->distance;
+                candidates.push(cities[service->destination]);
+            }
+        }
+    }
 
     // Return the total fee and total distance.
     // Return (INT_MAX, INT_MAX) if not path is found.
