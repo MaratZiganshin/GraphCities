@@ -15,7 +15,6 @@
 typedef PriorityQueue<City*, Cheapest> CitiesPriorityQueue;
 
 
-
 // в cpp так можно
 using namespace std; 
 
@@ -41,8 +40,8 @@ void RailSystem::reset(void)
     for (std::pair<std::string, City*> s : cities)
     {
         s.second->visited = false;
-        s.second->total_fee = 0;
-        s.second->total_distance = 0;
+        s.second->total_fee = INT_MAX;
+        s.second->total_distance = INT_MAX;
         s.second->from_city = "";
     }
 }
@@ -103,12 +102,6 @@ pair<int, int> RailSystem::calc_route(const string& from, const string& to)
     // NB: здесь необходимо использовать собственную реализацию очереди с приоритетами,
     // псевдоним для которой описан в верху этого файла
     CitiesPriorityQueue candidates;
-    for (pair<std::string, City*> city : cities)
-    {
-        city.second->total_fee = INT_MAX;
-        city.second->total_distance = INT_MAX;
-    }
-    //string currCity = from;
     candidates.push(cities[from]);
     cities[from]->visited = true;
     cities[from]->total_distance = 0;
@@ -118,7 +111,7 @@ pair<int, int> RailSystem::calc_route(const string& from, const string& to)
         City* currCity = candidates.pop();
         for (Service* service : outgoing_services[currCity->name])
         {
-            if (/*!cities[service->destination]->visited || */cities[service->destination]->total_fee > currCity->total_fee + service->fee)
+            if (cities[service->destination]->total_fee > currCity->total_fee + service->fee)
             {
                 cities[service->destination]->visited = true;
                 cities[service->destination]->from_city = currCity->name;
@@ -139,10 +132,15 @@ pair<int, int> RailSystem::calc_route(const string& from, const string& to)
 
 string RailSystem::recover_route(const string& city) 
 {	
-    // TODO: walk backwards through the cities
-    // container to recover the route we found
+    string result = "";
+    string currCity = city;
+    while (currCity != "")
+    {
+        result = currCity + " " + result;
+        currCity = cities[currCity]->from_city;
+    }
 
-    return "";
+    return result;
 }
 
 

@@ -35,9 +35,9 @@ int main(int argc, char* argv[])
     try 
     {
         RailSystem s("C:\\GitHub\\GraphCities\\Railway\\services.txt");
-        pair<int, int> p = s.calc_route("Lisbon", "Copenhagen");
-        cout << p.first << " " << p.second;
-        int k = 1;
+        s.output_cheapest_route("Lisbon", "Copenhagen", cout);
+       
+        system("pause");
         /*while (true) 
         {
             cerr << "\n\nEnter a start and destination city:  ('quit' to exit)\n";
