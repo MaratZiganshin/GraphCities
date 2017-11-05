@@ -26,12 +26,12 @@ public:
 
     bool operator()(City* city1, City* city2) 
     {
-        return city1->total_fee > city2->total_fee;
+        return city1->total_fee < city2->total_fee;
     }
     
     bool operator()(const City& city1, const City& city2) 
     {
-        return city1.total_fee > city2.total_fee;
+        return city1.total_fee < city2.total_fee;
     }
 };
 
@@ -69,6 +69,9 @@ class RailSystem
 {
 public:
     RailSystem(const std::string& filename);
+    RailSystem(const RailSystem& other);
+    RailSystem& operator=(const RailSystem& rhv);
+    void swap(RailSystem& lhv, RailSystem& rhv);
     ~RailSystem();
 
     void output_cheapest_route(const std::string& from, const std::string& to, std::ostream& out);

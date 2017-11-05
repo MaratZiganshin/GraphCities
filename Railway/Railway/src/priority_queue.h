@@ -11,20 +11,22 @@ public:
 
     void push(const T& newElement)
     {
-        int size = _storage.size();
-        int index = 0;
-        std::list<T>::const_iterator i;
+        _storage.push_back(newElement);
+        int index = _storage.size() - 1;
         Comparator comparator;
-        for (i = _storage.begin(); i != _storage.end(); ++i)
-            if (comparator(*i,newElement))
-                break;
-        _storage.insert(i, newElement);
+        while (comparator(_storage[index], _storage[(index - 1) / 2]))
+        {
+            T t = _storage[index];
+            _storage[index] = _storage[(index - 1) / 2];
+            _storage[(index - 1) / 2] = t;
+            index = (index - 1) / 2;
+        }
     }
 
     T pop()
     {
         T temp = _storage.front();
-        _storage.pop_front();
+        _storage.erase(_storage.begin());
         return temp;
     }
 
@@ -49,7 +51,7 @@ public:
     }
 private:
 
-    std::list<T> _storage;
+    std::vector<T> _storage;
 
 };
 

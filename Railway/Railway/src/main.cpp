@@ -34,10 +34,11 @@ int main(int argc, char* argv[])
 {
     try 
     {
-        RailSystem s("C:\\GitHub\\GraphCities\\Railway\\services.txt");
-        s.output_cheapest_route("Lisbon", "Copenhagen", cout);
-       
-        system("pause");
+        srand(time(0));
+        
+        RailSystem rs("C:\\GitHub\\GraphCities\\Railway\\services.txt");
+        rs.output_cheapest_route("Bern", "Paris",cout);
+        int k = 1;
         /*while (true) 
         {
             cerr << "\n\nEnter a start and destination city:  ('quit' to exit)\n";

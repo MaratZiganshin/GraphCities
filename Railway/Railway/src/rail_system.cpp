@@ -2,20 +2,10 @@
 //#pragma warning (disable:4503)
 
 #include "rail_system.h"
-
-
-// TODO: собственная реализация класса очереди с приоритетами
 #include "priority_queue.h"
 
-
-// Здесь объявляем псевдоним для специфицированной собственной реализации очереди с приоритетами,
-// шаблон которой объявлен в файле "priority_queue.h"
-// TODO: необходимо проверить компаратор Cheapest на правильность — т.е. что он выстраивает
-// города в «правильном» (с точки зрения алгоритма) порядке.
 typedef PriorityQueue<City*, Cheapest> CitiesPriorityQueue;
 
-
-// в cpp так можно
 using namespace std; 
 
 RailSystem::RailSystem(const string& filename) 
@@ -32,8 +22,31 @@ RailSystem::~RailSystem(void)
             delete service;
 }
 
-// TODO: тут д.б. КК и оператор копирования, т.к. деструктор объявлен...
+RailSystem::RailSystem(const RailSystem& other)
+{
+    for (pair<std::string, City*> pair : other.cities)
+        cities[pair.first] = new City(*pair.second);
+    for (pair<std::string, std::list<Service*>> pair : other.outgoing_services)
+        for (Service* service : pair.second)
+            outgoing_services[pair.first].push_back(new Service(service->destination, service->fee, service->distance));
+}
 
+void RailSystem::swap(RailSystem& lhv, RailSystem& rhv)
+{
+    std::map<std::string, City*> tempCities = lhv.cities;
+    std::map<std::string, std::list<Service*>> tempServices = lhv.outgoing_services;
+    lhv.cities = rhv.cities;
+    lhv.outgoing_services = rhv.outgoing_services;
+    rhv.cities = tempCities;
+    rhv.outgoing_services = tempServices;
+}
+
+RailSystem& RailSystem::operator=(const RailSystem& rhv)
+{
+    RailSystem temp(rhv);
+    swap(temp, *this);
+    return *this;
+}
 
 void RailSystem::reset(void)
 {
